@@ -151,13 +151,12 @@ function startWorkerThread<R, T extends AnyAsyncFn<R>>(
   bufferSize = DEFAULT_WORKER_BUFFER_SIZE,
   timeout?: number,
 ) {
-  const { MessageChannel, Worker } = workerThreads!
-
-  const { port1: mainPort, port2: workerPort } = new MessageChannel()
+  const { port1: mainPort, port2: workerPort } =
+    new workerThreads!.MessageChannel()
 
   const isTs = workerPath.endsWith('.ts')
 
-  const worker = new Worker(
+  const worker = new workerThreads!.Worker(
     isTs
       ? TS_USE_ESM
         ? throwError(
